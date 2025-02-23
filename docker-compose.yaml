@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  web:
+    build: ./web
+    ports:
+      - "8082:8081"
+    depends_on:
+      - mongodb
+      - redis
+    environment:
+      - MONGODB_URI=${MONGODB_URI}
+      - REDIS_URI=${REDIS_URI}
+    volumes:
+      - ./web:/app
+    networks:
+      - task-network
+
+  worker:
+    build: ./worker
+    depends_on:
+      - redis
+      - mongodb
+    environment:
+      - MONGODB_URI=${MONGODB_URI}
+      - REDIS_URI=${REDIS_URI}
+    volumes:
+      - ./worker:/app
+    networks:
+      - task-network
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongodb/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    networks:
+      - task-network
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - task-network
+
+volumes:
+  mongodb_data:
+  redis_data:
+
+networks:
+  task-network:
+    driver: bridge
