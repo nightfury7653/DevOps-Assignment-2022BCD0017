@@ -17,8 +17,8 @@ This project demonstrates a **microservices-based architecture** using **Docker 
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/microservices-docker.git
-cd microservices-docker
+git clone https://github.com/nightfury7653/DevOps-Assignment-2022BCD0017.git
+cd DevOps-Assignment-2022BCD0017
 ```
 
 ### 2. Build and Start the Containers
@@ -34,7 +34,7 @@ docker ps
 ### 4. Test API Endpoints
 #### Check Web Service
 ```bash
-curl http://localhost:5000/
+curl http://localhost:8082/
 ```
 Expected Output:
 ```json
@@ -43,7 +43,7 @@ Expected Output:
 
 #### Add a Task
 ```bash
-curl http://localhost:5000/add_task
+curl http://localhost:8082/add_task
 ```
 Expected Output:
 ```json
